@@ -45,4 +45,44 @@ const sum2 = new Function('a', 'b', 'return a+b');
 console.log(sum2(8, 8));
 console.log(typeof sum2);
 
-//obj
+//obj prototype inheritance
+
+let object = {
+  name: 'kilonzo',
+  city: 'Mariakani',
+  getIntro: function () {
+    console.log(`${this.name} from ${this.city}`);
+  },
+};
+
+let object2 = {
+  name: 'nzai',
+};
+//never do this
+object2.__proto__ = object;
+console.log(object2.getIntro());
+
+//object prototypes
+
+function Person(first, last) {
+  this.firstName = first;
+  this.lastName = last;
+}
+
+Person.prototype.greeting = function () {
+  return `Hello ${firstName}, ${lastName}`;
+};
+
+function Customer(first, last, phone, membership) {
+  Person.call(this, first, last);
+  this.phone = phone;
+  this.membership = membership;
+}
+const weee = new Person('mundumeh', 'nzai');
+
+Customer.prototype = Object.create(Person.prototype);
+Customer.prototype.constructor = Customer;
+
+const weeduh = new Customer('nzai', 'ndume', '433333', 'food');
+
+console.log(weeduh);
